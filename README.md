@@ -12,19 +12,21 @@
 ## 🚀 Key Features
 
 ### 💎 Core Tunneling Protocols
-* ✅ **Xray Core (XTLS-Reality):** VMess, VLESS, and Trojan-WS with Multi-Path Support and Nginx Multiplexing.
-* ✅ **SSH, Dropbear & Stunnel4:** Secure shell access with WebSocket (Port 80) and SSL/TLS (Port 443) payload injection.
+* ✅ **Xray Core (XTLS-Reality & HTTPUpgrade):** VMess, VLESS, and Trojan-WS with Multi-Path Support, Nginx Multiplexing, and dedicated HTTPUpgrade payloads for aggressive CloudFront CDN bypassing.
+* ✅ **SSH, Dropbear & Stunnel4:** Secure shell access with standard WebSocket (Port 80), SSL/TLS (Port 443), and a dedicated "Blind 101" Proxy (Port 8880) for aggressive ISP firewall bypassing (HTTP Injector / Custom Payloads).
 * ✅ **OpenVPN & OHP:** Dual-stack OpenVPN (TCP/UDP) paired with Open HTTP Proxy (OHP) for custom header routing.
-* ✅ **SlowDNS (DNSTT):** Advanced DNS tunneling dynamically built via Go, optimized for highly restricted networks.
+* ✅ **SlowDNS (DNSTT) & Key Manager:** Advanced DNS tunneling dynamically built via Go, optimized for highly restricted networks. Includes a built-in Key Manager to swap cryptographic keys on the fly.
 * ✅ **Dante SOCKS5 Proxy:** Dedicated SOCKS5 proxy (Port 1080) for secure, app-specific tunneling.
 * ✅ **BadVPN UDPGW:** Accelerated UDP gateway for seamless online gaming and voice/video calls.
 
 ### 🛡️ Smart Automation & Security
 * 🔐 **Premium License Auth:** Secure, cloud-based server validation system to prevent unauthorized script execution.
 * ☁️ **Telegram Cloud Backup & Restore:** Automated user data and configuration backups sent to your Telegram Bot, with a seamless cloud restoration tool to recover your server instantly via link.
+* 📡 **Over-The-Air (OTA) Updates:** Pull new features, security patches, and menu updates directly from the master vault to live servers without reinstalling the OS.
 * 🔄 **Auto-Expiry Engine:** Automatically hunts and deletes expired VPN accounts at midnight.
-* 🚫 **Anti-Multilogin (Autokill):** Scans and disconnects users exceeding their maximum allowed device limit.
-* 🩺 **System Maintenance:** Automated RAM cleaner, scheduled reboots, server health diagnostics, and integrated Ookla Speedtest.
+* 🚫 **Anti-Multilogin (Autokill & 3-Strike Sniper):** Scans and disconnects users exceeding their maximum allowed device limit. Actively hunts live Dropbear/SSH PIDs to sever connections and permanently locks accounts after 3 violations.
+* 🛡️ **DDoS-Deflate Engine:** Integrated active firewall bouncer that monitors concurrent connections and automatically IP-bans malicious network floods.
+* 🩺 **System Maintenance & Self-Healing:** Built to survive Ubuntu 24.04 strict process-orphaning, featuring an automated RAM cleaner, scheduled reboots, server health diagnostics, and an integrated Ookla Speedtest.
 
 ---
 
@@ -72,14 +74,14 @@ menu
 ### 🖥️ Menu Overview
 | Menu Option | Function |
 | :--- | :--- |
-| **[01] SSH Manager** | Create, Renew, Auto-kill, and Manage SSH/OpenVPN users. |
-| **[02] VMess Manager** | Manage VMess WebSocket accounts & trial generation. |
-| **[03] VLESS Manager** | Manage VLESS XTLS accounts & trial generation. |
-| **[04] Trojan Manager** | Manage Trojan-WS accounts & trial generation. |
-| **[05] Settings** | Check RAM, Speedtest (Ookla), Restart Services, Health Check. |
-| **[06] Backup/Restore** | Manage Telegram Bot cloud backups and system restoration. |
-| **[07] Domain & SSL** | Change VPS Host, update NameServers, and force-renew SSL. |
-| **[08] Check Running** | Live monitor of core services (Nginx, Xray, Stunnel, Dropbear). |
+| **[01] SSH Manager** | Create, Renew, Auto-kill, Check Multi-Login, and access the **3-Strike Lock Manager**. |
+| **[02] VMess Manager** | Manage VMess WS & HTTPUpgrade accounts + trial generation. |
+| **[03] VLESS Manager** | Manage VLESS XTLS & HTTPUpgrade accounts + trial generation. |
+| **[04] Trojan Manager** | Manage Trojan-WS accounts & manual expired user cleanup. |
+| **[05] Settings** | OTA Updates, SlowDNS Key Manager, Auto-Reboot config, Reboot Logs, Speedtest. |
+| **[06] Backup/Restore** | Manage Telegram Bot cloud backups (Event-Driven/Cron) and system restoration. |
+| **[07] Domain & SSL** | Change VPS Host, update NameServers, and force-renew ACME Standalone SSL. |
+| **[08] Check Running** | Live monitor of core services (Nginx, Xray, Stunnel, Dropbear, Python Proxy). |
 
 ---
 
@@ -91,6 +93,7 @@ menu
 | **Dropbear** | TCP | 109, 143 |
 | **Stunnel4 (SSL/TLS)** | TCP | 447, 777 |
 | **SSH-WS (HTTP)** | TCP | 80 |
+| **Custom SSH-WS (ISP Bypass)** | TCP | 8880 |
 | **SSH-SSL-WS** | TCP | 443 |
 | **Xray (VMess, VLESS, Trojan)**| TCP/TLS | 443, 80 |
 | **OpenVPN TCP** | TCP | 1194 |
